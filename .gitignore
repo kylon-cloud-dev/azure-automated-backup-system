@@ -1,0 +1,15 @@
+# Terraform local files
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+crash.log
+crash.*.log
+
+# Terraform variable files may contain emails, keys, or environment-specific values
+terraform.tfvars
+*.auto.tfvars
+
+# Local OS/editor files
+.DS_Store
+.vscode/
