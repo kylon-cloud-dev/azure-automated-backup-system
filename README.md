@@ -55,3 +55,109 @@ rg-backup-kylon
 ├── Azure Monitor Action Group
 ├── Azure Monitor Alert Rule
 └── Logic App daily confirmation workflow
+
+## Terraform Deployment
+
+The infrastructure was deployed using Terraform.
+
+![Terraform Apply Success](screenshots/01-terraform-apply-success.png)
+
+## Resource Group Overview
+
+All project resources were deployed into a dedicated Azure resource group.
+
+![Resource Group Overview](screenshots/02-resource-group-overview.png)
+
+## Storage Account Overview
+
+The storage account was configured with geo-redundant storage, TLS 1.2, blob versioning, and soft delete.
+
+![Storage Account Overview](screenshots/03-storage-account-overview.png)
+
+## Storage Containers
+
+Three private containers were created to separate backup data by type.
+
+![Storage Containers Created](screenshots/04-storage-containers-created.png)
+
+## Blob Versioning and Soft Delete
+
+Blob versioning and soft delete were enabled to support recovery from accidental deletion or overwritten files.
+
+![Blob Versioning Enabled](screenshots/05-blob-versioning-enabled.png)
+
+## Lifecycle Management
+
+Lifecycle rules were configured to control storage costs by moving older files to cheaper tiers and deleting old versions.
+
+![Lifecycle Management Policy - Base Blobs](screenshots/06-lifecycle-management-policy-base-blobs.png)
+
+![Lifecycle Management Policy - Versions](screenshots/07-lifecycle-management-policy-versions.png)
+
+## Diagnostic Settings
+
+Storage read, write, delete, and transaction logs were routed to Log Analytics.
+
+![Diagnostic Settings Overview](screenshots/08-storage-diagnostic-settings-overview.png)
+
+![Diagnostic Settings Details](screenshots/09-storage-diagnostic-settings-details.png)
+
+## Alerting
+
+An Azure Monitor Action Group was created to support email notifications for backup-related alerts.
+
+![Action Group Email Notification](screenshots/10-action-group-email-notification.png)
+
+## Blob Versioning Test
+
+A test file was uploaded, overwritten, and then listed with versioning enabled. The output showed multiple versions of the same blob, confirming that versioning worked correctly.
+
+![Blob Versioning Test Output](screenshots/11-blob-versioning-test-output.png)
+
+## Logic App Workflow
+
+A Logic App was configured to check the backup container daily and send a confirmation email.
+
+![Logic App Workflow](screenshots/12-logic-app-workflow.png)
+
+## Logic App Run History
+
+The Logic App was manually tested and completed successfully.
+
+![Logic App Run Success](screenshots/13-logic-app-run-success.png)
+
+## Backup Confirmation Email
+
+The Logic App sent a confirmation email showing the backup system was active and the documents container was checked.
+
+![Backup Confirmation Email](screenshots/14-backup-confirmation-email.png)
+
+## Troubleshooting Notes
+
+### Azure CLI Blob Upload Permission Error
+
+While uploading a test blob using `--auth-mode login`, Azure returned a permissions error because the signed-in identity did not have the required Storage Blob Data Contributor role.
+
+To continue the lab, the upload was completed using the storage account key.
+
+### Gmail Connector Policy Error
+
+The Gmail connector could not be used with the Azure Blob connector due to a Logic Apps connector policy restriction. The workflow was completed using an Outlook.com email connector instead.
+
+## Cleanup
+
+After the project was documented, resources were destroyed with Terraform to avoid unnecessary Azure costs.
+
+![Terraform Destroy Success](screenshots/15-terraform-destroy-success.png)
+
+## Skills Demonstrated
+
+- Infrastructure as Code with Terraform
+- Azure Blob Storage backup design
+- Blob versioning and retention
+- Storage lifecycle cost management
+- Azure Monitor alerting
+- Log Analytics diagnostic collection
+- Logic Apps workflow automation
+- Azure CLI troubleshooting
+- Cloud documentation and cleanup
