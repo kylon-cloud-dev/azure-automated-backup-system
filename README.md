@@ -55,6 +55,8 @@ rg-backup-kylon
 ├── Azure Monitor Action Group
 ├── Azure Monitor Alert Rule
 └── Logic App daily confirmation workflow
+```
+
 
 ## Terraform Deployment
 
